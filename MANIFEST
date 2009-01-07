@@ -23,6 +23,7 @@ MANIFEST			This list of files
 META.yml
 README
 t/00_compile.t
+t/01_basic.t
 xt/01_pod.t
 xt/02_podcoverage.t
 xt/03_podspell.t

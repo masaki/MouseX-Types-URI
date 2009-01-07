@@ -21,3 +21,4 @@ NAKAGAWA Masaki
 MouseX::Types::URI
 Yuval Kogman
 Uri DataUri FileUri
+Getopt

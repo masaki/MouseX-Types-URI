@@ -9,6 +9,8 @@ requires 'namespace::clean';
 requires 'URI';
 requires 'URI::FromHash';
 
+recommends 'MouseX::Getopt';
+
 tests 't/*.t';
 test_requires 'Test::More';
 test_requires 'ok';
