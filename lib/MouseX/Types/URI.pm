@@ -15,7 +15,7 @@ use namespace::clean;
 
 use MouseX::Types -declare => [qw(Uri FileUri DataUri)]; # export Types
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 subtype 'URI', # doesn't use class_type for 'URI'
     where { $_->isa('URI') or $_->isa('URI::WithBase') };
