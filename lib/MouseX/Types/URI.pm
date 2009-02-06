@@ -8,14 +8,12 @@ use URI::WithBase;
 use URI::FromHash qw(uri);
 use URI::file;
 use URI::data;
-use Mouse::TypeRegistry;
+use Mouse::Util::TypeConstraints;
 use MouseX::Types::Mouse qw(Str ScalarRef HashRef);
 use MouseX::Types::Path::Class;
 use namespace::clean;
 
-use MouseX::Types
-    -declare => [qw(Uri FileUri DataUri)]; # export Types
-require Mouse;                             # for Mouse::TypeRegistry (Mouse::load_class)
+use MouseX::Types -declare => [qw(Uri FileUri DataUri)]; # export Types
 
 our $VERSION = '0.01';
 

@@ -2,9 +2,9 @@ use inc::Module::Install;
 name 'MouseX-Types-URI';
 all_from 'lib/MouseX/Types/URI.pm';
 
-requires 'Mouse' => '0.14';
-requires 'MouseX::Types';
-requires 'MouseX::Types::Path::Class';
+requires 'Mouse' => '0.15';
+requires 'MouseX::Types' => '0.01';
+requires 'MouseX::Types::Path::Class' => '0.03';
 requires 'namespace::clean';
 requires 'URI';
 requires 'URI::FromHash';
