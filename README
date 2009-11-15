@@ -1,27 +1,104 @@
-This is Perl module MouseX::Types::URI.
+NAME
+    MouseX::Types::URI - A URI type library for Mouse
 
-INSTALLATION
+SYNOPSIS
+  CLASS TYPES
+      package MyApp;
+      use Mouse;
+      use MouseX::Types::URI;
+      with 'MouseX::Getopt'; # optional
 
-MouseX::Types::URI installation is straightforward. If your CPAN shell is set up,
-you should just be able to do
+      has 'uri' => (
+          is     => 'rw',
+          isa    => 'URI',
+          coerce => 1,
+      );
 
-    % cpan MouseX::Types::URI
+      has 'data' => (
+          is     => 'rw',
+          isa    => 'URI::data',
+          coerce => 1,
+      );
 
-Download it, unpack it, then build it as per the usual:
+      has 'file' => (
+          is     => 'rw',
+          isa    => 'URI::file',
+          coerce => 1,
+      );
 
-    % perl Makefile.PL
-    % make && make test
+  CUSTOM TYPES
+      package MyApp;
+      use Mouse;
+      use MouseX::Types::URI qw(Uri DataUri FileUri);
+      with 'MouseX::Getopt'; # optional
 
-Then install it:
+      has 'uri' => (
+          is     => 'rw',
+          isa    => Uri,
+          coerce => 1,
+      );
 
-    % make install
+      has 'data' => (
+          is     => 'rw',
+          isa    => DataUri,
+          coerce => 1,
+      );
 
-DOCUMENTATION
+      has 'file' => (
+          is     => 'rw',
+          isa    => FileUri,
+          coerce => 1,
+      );
 
-MouseX::Types::URI documentation is available as in POD. So you can do:
+DESCRIPTION
+    MouseX::Types::URI creates common Mouse types, coercions and option
+    specifications useful for dealing with URIs as Mouse attributes.
 
-    % perldoc MouseX::Types::URI
+    Coercions (see Mouse::TypeRegistry) are made from "Str", "ScalarRef",
+    "HashRef", Path::Class::Dir and Path::Class::File to URI, URI::data and
+    URI::file objects.
 
-to read the documentation online with your favorite pager.
+    If you have MouseX::Getopt installed, the Getopt option type ("=s") will
+    be added for URI, URI::data and URI::file.
 
-NAKAGAWA Masaki
+TYPES
+  Uri
+        Either URI or URI::WithBase.
+
+        Coerces from "Str" via "new" in URI.
+
+        Coerces from Path::Class::File and Path::Class::Dir via "new" in
+        URI::file.
+
+        Coerces from "ScalarRef" via "new" in URI::data.
+
+        Coerces from "HashRef" using URI::FromHash.
+
+  DataUri
+        A URI whose scheme is "data".
+
+        Coerces from "Str" and "ScalarRef" via "new" in URI::data.
+
+  FileUri
+        A URI::file class type.
+
+        Coerces from "Str", Path::Class::File and Path::Class::Dir via "new"
+        in URI::file
+
+AUTHOR
+    NAKAGAWA Masaki <masaki@cpan.org>
+
+THANKS TO
+    Yuval Kogman, "AUTHOR" in MooseX::Types::URI
+
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
+    Mouse, MouseX::Types,
+
+    URI, URI::data, URI::file, URI::WithBase, URI::FromHash,
+
+    MooseX::Types::URI
+

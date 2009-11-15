@@ -1,8 +1,6 @@
-use Test::Base;
+use Test::More;
 use URI;
 use URI::WithBase;
-
-plan tests => 18;
 
 {
     package Foo;
@@ -43,3 +41,5 @@ for my $class (qw(Foo Bar)) {
     is $obj->data => $data;
     is $obj->file => $file;
 }
+
+done_testing;

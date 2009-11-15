@@ -2,20 +2,30 @@ use inc::Module::Install;
 name 'MouseX-Types-URI';
 all_from 'lib/MouseX/Types/URI.pm';
 
-requires 'Mouse' => '0.15';
-requires 'MouseX::Types' => '0.01';
-requires 'MouseX::Types::Path::Class' => '0.03';
-requires 'namespace::clean';
+readme_from 'lib/MouseX/Types/URI.pm';
+readme_markdown_from 'lib/MouseX/Types/URI.pm';
+auto_set_repository;
+
+requires 'Mouse' => '0.40';
+requires 'MouseX::Types' => '0.02';
+requires 'MouseX::Types::Path::Class' => '0.06';
 requires 'URI';
 requires 'URI::FromHash';
 
-recommends 'MouseX::Getopt';
+recommends 'MouseX::Getopt' => '0.2200';
 
 tests 't/*.t';
-test_requires 'Test::More';
-test_requires 'ok';
+test_requires 'Test::More' => '0.94';
+test_requires 'Test::UseAllModules';
+
 author_tests 'xt';
-use_test_base;
+author_requires 'Test::Pod';
+author_requires 'Test::Pod::Coverage';
+author_requires 'Test::Spelling';
+author_requires 'ShipIt';
+author_requires 'ShipIt::Step::Manifest';
+author_requires 'ShipIt::Step::DistClean';
+author_requires 'ShipIt::Step::Twitter';
 
 auto_include_deps;
 WriteAll;
