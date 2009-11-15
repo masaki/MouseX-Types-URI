@@ -14,7 +14,7 @@ use MouseX::Types -declare => [qw(Uri FileUri DataUri)]; # export types
 use MouseX::Types::Mouse qw(Str ScalarRef HashRef);
 use MouseX::Types::Path::Class qw(File Dir);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 type 'URI', # doesn't use class_type 'URI'
     where { Scalar::Util::blessed($_) and ($_->isa('URI') or $_->isa('URI::WithBase')) };
