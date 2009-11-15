@@ -9,10 +9,9 @@ auto_set_repository;
 requires 'Mouse' => '0.40';
 requires 'MouseX::Types' => '0.02';
 requires 'MouseX::Types::Path::Class' => '0.06';
+requires 'Scalar::Util' => '1.14';
 requires 'URI';
 requires 'URI::FromHash';
-
-recommends 'MouseX::Getopt' => '0.2200';
 
 tests 't/*.t';
 test_requires 'Test::More' => '0.94';

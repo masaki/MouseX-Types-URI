@@ -9,7 +9,6 @@ MouseX::Types::URI - A URI type library for Mouse
   package MyApp;
   use Mouse;
   use MouseX::Types::URI;
-  with 'MouseX::Getopt'; # optional
 
   has 'uri' => (
       is     => 'rw',
@@ -34,7 +33,6 @@ MouseX::Types::URI - A URI type library for Mouse
   package MyApp;
   use Mouse;
   use MouseX::Types::URI qw(Uri DataUri FileUri);
-  with 'MouseX::Getopt'; # optional
 
   has 'uri' => (
       is     => 'rw',
@@ -60,14 +58,10 @@ MouseX::Types::URI creates common [Mouse](http://search.cpan.org/search?mode=mod
 coercions and option specifications useful for dealing
 with [URI](http://search.cpan.org/search?mode=module&query=URI)s as [Mouse](http://search.cpan.org/search?mode=module&query=Mouse) attributes.
 
-Coercions (see [Mouse::TypeRegistry](http://search.cpan.org/search?mode=module&query=Mouse::TypeRegistry)) are made from
+Coercions (see [Mouse::Util::TypeConstraints](http://search.cpan.org/search?mode=module&query=Mouse::Util::TypeConstraints)) are made from
 `Str`, `ScalarRef`, `HashRef`,
 [Path::Class::Dir](http://search.cpan.org/search?mode=module&query=Path::Class::Dir) and [Path::Class::File](http://search.cpan.org/search?mode=module&query=Path::Class::File) to
 [URI](http://search.cpan.org/search?mode=module&query=URI), [URI::data](http://search.cpan.org/search?mode=module&query=URI::data) and [URI::file](http://search.cpan.org/search?mode=module&query=URI::file) objects.
-
-If you have [MouseX::Getopt](http://search.cpan.org/search?mode=module&query=MouseX::Getopt) installed,
-the Getopt option type ("=s") will be added
-for [URI](http://search.cpan.org/search?mode=module&query=URI), [URI::data](http://search.cpan.org/search?mode=module&query=URI::data) and [URI::file](http://search.cpan.org/search?mode=module&query=URI::file).
 
 # TYPES
 

@@ -6,7 +6,6 @@ SYNOPSIS
       package MyApp;
       use Mouse;
       use MouseX::Types::URI;
-      with 'MouseX::Getopt'; # optional
 
       has 'uri' => (
           is     => 'rw',
@@ -30,7 +29,6 @@ SYNOPSIS
       package MyApp;
       use Mouse;
       use MouseX::Types::URI qw(Uri DataUri FileUri);
-      with 'MouseX::Getopt'; # optional
 
       has 'uri' => (
           is     => 'rw',
@@ -54,12 +52,9 @@ DESCRIPTION
     MouseX::Types::URI creates common Mouse types, coercions and option
     specifications useful for dealing with URIs as Mouse attributes.
 
-    Coercions (see Mouse::TypeRegistry) are made from "Str", "ScalarRef",
-    "HashRef", Path::Class::Dir and Path::Class::File to URI, URI::data and
-    URI::file objects.
-
-    If you have MouseX::Getopt installed, the Getopt option type ("=s") will
-    be added for URI, URI::data and URI::file.
+    Coercions (see Mouse::Util::TypeConstraints) are made from "Str",
+    "ScalarRef", "HashRef", Path::Class::Dir and Path::Class::File to URI,
+    URI::data and URI::file objects.
 
 TYPES
   Uri

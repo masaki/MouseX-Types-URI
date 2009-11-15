@@ -1,61 +1,62 @@
 package MouseX::Types::URI;
 
+use 5.008_001;
 use strict;
 use warnings;
-use 5.8.1;
+use Scalar::Util ();
 use URI;
-use URI::WithBase;
-use URI::FromHash qw(uri);
 use URI::file;
 use URI::data;
+use URI::WithBase;
+use URI::FromHash ();
 use Mouse::Util::TypeConstraints;
+use MouseX::Types -declare => [qw(Uri FileUri DataUri)]; # export types
 use MouseX::Types::Mouse qw(Str ScalarRef HashRef);
-use MouseX::Types::Path::Class;
-use namespace::clean;
-
-use MouseX::Types -declare => [qw(Uri FileUri DataUri)]; # export Types
+use MouseX::Types::Path::Class qw(File Dir);
 
 our $VERSION = '0.02';
 
-subtype 'URI', # doesn't use class_type for 'URI'
-    where { $_->isa('URI') or $_->isa('URI::WithBase') };
-class_type $_ => { class => $_ } for qw( URI::file URI::data );
+type 'URI', # doesn't use class_type 'URI'
+    where { Scalar::Util::blessed($_) and ($_->isa('URI') or $_->isa('URI::WithBase')) };
+
+class_type 'URI::file';
+class_type 'URI::data';
 
 subtype Uri,     as 'URI';
 subtype FileUri, as 'URI::file';
 subtype DataUri, as 'URI::data';
 
 for my $type ( 'URI', Uri ) {
-    coerce $type,
+    coerce($type,
         from Str,                 via { URI->new($_) },
         from ScalarRef,           via { my $u = URI->new('data:'); $u->data($$_); $u },
-        from HashRef,             via { uri(%$_) },
+        from HashRef,             via { URI::FromHash::uri(%$_) },
+        from File,                via { URI::file->new($_) },
+        from Dir,                 via { URI::file->new($_) },
         from 'Path::Class::Dir',  via { URI::file->new($_) },
-        from 'Path::Class::File', via { URI::file->new($_) };
+        from 'Path::Class::File', via { URI::file->new($_) },
+    );
 }
 
 for my $type ( 'URI::file', FileUri ) {
-    coerce $type,
+    coerce($type,
         from Str,                 via { URI::file->new($_) },
+        from File,                via { URI::file->new($_) },
+        from Dir,                 via { URI::file->new($_) },
         from 'Path::Class::Dir',  via { URI::file->new($_) },
-        from 'Path::Class::File', via { URI::file->new($_) };
+        from 'Path::Class::File', via { URI::file->new($_) },
+    );
 }
 
 for my $type ( 'URI::data', DataUri ) {
-    coerce $type,
+    coerce($type,
         from Str, via {
             /^data:/ ? URI->new($_) : do { my $u = URI->new('data:'); $u->data($_); $u }
         },
         from ScalarRef, via {
             $$_ =~ /^data:/ ? URI->new($$_) : do { my $u = URI->new('data:'); $u->data($$_); $u }
-        };
-}
-
-# optionally add Getopt option type
-eval { require MouseX::Getopt::OptionTypeMap };
-unless ($@) {
-    MouseX::Getopt::OptionTypeMap->add_option_type_to_map($_, '=s')
-        for ( 'URI', 'URI::data', 'URI::file', Uri, DataUri, FileUri );
+        },
+    );
 }
 
 1;
@@ -71,7 +72,6 @@ MouseX::Types::URI - A URI type library for Mouse
   package MyApp;
   use Mouse;
   use MouseX::Types::URI;
-  with 'MouseX::Getopt'; # optional
 
   has 'uri' => (
       is     => 'rw',
@@ -96,7 +96,6 @@ MouseX::Types::URI - A URI type library for Mouse
   package MyApp;
   use Mouse;
   use MouseX::Types::URI qw(Uri DataUri FileUri);
-  with 'MouseX::Getopt'; # optional
 
   has 'uri' => (
       is     => 'rw',
@@ -122,14 +121,10 @@ MouseX::Types::URI creates common L<Mouse> types,
 coercions and option specifications useful for dealing
 with L<URI>s as L<Mouse> attributes.
 
-Coercions (see L<Mouse::TypeRegistry>) are made from
+Coercions (see L<Mouse::Util::TypeConstraints>) are made from
 C<Str>, C<ScalarRef>, C<HashRef>,
 L<Path::Class::Dir> and L<Path::Class::File> to
 L<URI>, L<URI::data> and L<URI::file> objects.
-
-If you have L<MouseX::Getopt> installed,
-the Getopt option type ("=s") will be added
-for L<URI>, L<URI::data> and L<URI::file>.
 
 =head1 TYPES
 
